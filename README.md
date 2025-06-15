@@ -53,3 +53,4 @@ streamlit run dashboard.py
 ```
 
 ## Visuals
+![Dashboard screenshot](0860db9ed67c2f102311e3570982b85f.png)
