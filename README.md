@@ -6,7 +6,7 @@ This project demonstrates data ingestion, filtering, windowed aggregations, and 
 
 ---
 
-## 📖 Overview
+## Overview
 
 The system processes simulated temperature sensor data in real time, performing:
 
@@ -19,7 +19,7 @@ This extends the base exercise described in `kafka_Roland.md` by adding advanced
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 | Component                      | Description                                                         | Kafka Topic(s)         |
 | ----------------------------- | ------------------------------------------------------------------ | ---------------------- |
@@ -31,7 +31,7 @@ This extends the base exercise described in `kafka_Roland.md` by adding advanced
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Launch Kafka Broker
 
