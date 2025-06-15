@@ -1,77 +1,41 @@
-IoT Sensor Data Streaming & Analytics
+# Real-Time IoT Sensor Stream Processing
 
-This project showcases a real-time data processing system for simulated IoT temperature sensors, leveraging Apache Kafka, Quix Streams, and a Streamlit dashboard for instant insights.
+A complete real-time streaming solution for simulated IoT temperature sensors using **Apache Kafka**, **Quix Streams**, and **Streamlit**. 
 
-Building on the baseline exercise described in kafka_Roland.md, it adds sophisticated capabilities such as:
+This project demonstrates data ingestion, filtering, windowed aggregations, and a live dashboard to monitor alerts and temperature KPIs.
 
-    Aggregating alert events over sliding time windows
+---
 
-    Calculating rolling average temperatures
+## 📖 Overview
 
-    Visualizing metrics dynamically in an interactive UI
+The system processes simulated temperature sensor data in real time, performing:
 
-Architecture Overview
+- High-temperature alert filtering
+- Counting alerts in a sliding 5-second window
+- Calculating average temperature over a sliding 10-second window
+- Displaying live metrics and charts in a Streamlit dashboard
 
-The solution is structured around five key components:
+This extends the base exercise described in `kafka_Roland.md` by adding advanced windowed aggregations and a responsive UI.
 
-    Data Producer (producer.py)
-    Simulates a sensor generating temperature readings every second, publishing raw data to the Kafka sensor topic.
+---
 
-    Alert Filtering Consumer (consumer.py)
-    Listens to the sensor stream, identifies high-temperature readings (above 303 Kelvin), and pushes these alerts into an alert topic.
+## 🏗 Architecture
 
-    Alert Count Aggregator (alert_counter.py)
-    Reads from the alert topic, counts alerts within a rolling 5-second window, and publishes the counts to alert-count.
+| Component                      | Description                                                         | Kafka Topic(s)         |
+| ----------------------------- | ------------------------------------------------------------------ | ---------------------- |
+| **Producer** (`producer.py`)  | Simulates sensor temperature readings every second                 | `sensor`               |
+| **Alert Filter** (`consumer.py`) | Filters high temperature data (Kelvin > 303)                      | `alert`                |
+| **Alert Counter** (`alert_counter.py`) | Aggregates alert counts over 5-second hopping window             | `alert-count`          |
+| **Average Temperature Tracker** (`avg_temp.py`) | Computes average temperature over 10-second hopping window       | `avg-temp`             |
+| **Dashboard** (`dashboard.py`) | Streamlit app visualizing device temps, alert counts, averages, and charts | Consumes all above     |
 
-    Average Temperature Calculator (avg_temp.py)
-    Computes the average temperature from sensor data over a 10-second hopping window, outputting results to avg-temp.
+---
 
-    Dashboard Application (dashboard.py)
-    Streamlit-powered frontend showing live device temperatures, alert counts, average temperature trends, and a historical temperature graph.
+## 🚀 Getting Started
 
-Getting Started
-Step 1: Launch Kafka
+### 1. Launch Kafka Broker
 
-Start your Kafka environment using Docker Compose:
+Run Kafka using Docker Compose:
 
+```bash
 docker compose up -d
-
-Step 2: Run Processing Pipelines
-
-Open separate terminals and launch each of the following:
-
-python consumer.py        # Processes raw data into alerts
-python alert_counter.py   # Calculates alert counts over 5-second windows
-python avg_temp.py        # Computes average temperature over 10-second windows
-
-Step 3: Start the Dashboard
-
-Launch the real-time monitoring UI:
-
-streamlit run dashboard.py
-
-Kafka Topic Breakdown
-Topic Name	Purpose
-sensor	Original simulated sensor temperature readings
-alert	High-temperature events extracted from sensor data
-alert-count	Number of alerts aggregated over recent 5 seconds
-avg-temp	Rolling average temperature calculated over 10 seconds
-Installation & Dependencies
-
-Use uv for managing Python dependencies:
-
-uv init
-uv add streamlit quixstreams
-
-Alternatively, install packages via the provided requirements.txt.
-Key Concepts & Features
-
-    Quix Streaming DataFrames enable declarative, easy-to-read streaming transformations.
-
-    Time-based Hopping Windows provide flexible, overlapping intervals for smooth KPI calculations.
-
-    Streamlit Layouts use columns to arrange multiple live metrics side by side for a clean dashboard view.
-
-Visuals
-
-Explore the included screenshots to see the dashboard’s real-time visualization in action.
